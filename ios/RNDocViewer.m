@@ -162,7 +162,7 @@ RCT_EXPORT_METHOD(openDocBinaryinUrl:(NSArray *)array callback:(RCTResponseSende
         //NSData* byteArrayString = [binaryString dataUsingEncoding:NSUTF8StringEncoding];
          //NSLog(@"%@", byteArrayString);
         NSURL* urlbinary = [NSURL URLWithString:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-        if ([url containsString:@"file:///"]) {
+        if ([url containsString:@"%20"]) {
             urlbinary = [[NSURL alloc] initWithString:url];
         }
         NSData* dat = [NSData dataWithContentsOfURL:urlbinary];
