@@ -57,10 +57,10 @@ RCT_EXPORT_METHOD(openDoc:(NSArray *)array callback:(RCTResponseSenderBlock)call
         NSString* urlStr = dict[@"url"];
         NSString* fileNameOptional = dict[@"fileName"];
         NSString* fileType = dict[@"fileType"];
-        NSURL* url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        if ([urlStr containsString:@"file:///"]) {
-            url = [[NSURL alloc] initWithString:urlStr];
+        if ([urlStr containsString:@"%20"]) {
+            urlStr = [urlStr stringByRemovingPercentEncoding];
         }
+        NSURL* url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         NSData* dat = [NSData dataWithContentsOfURL:url];
         RCTLogInfo(@"Url %@", url);
         RCTLogInfo(@"FileNameOptional %@", fileNameOptional);
@@ -162,7 +162,7 @@ RCT_EXPORT_METHOD(openDocBinaryinUrl:(NSArray *)array callback:(RCTResponseSende
         //NSData* byteArrayString = [binaryString dataUsingEncoding:NSUTF8StringEncoding];
          //NSLog(@"%@", byteArrayString);
         NSURL* urlbinary = [NSURL URLWithString:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-        if ([url containsString:@"%20"]) {
+        if ([url containsString:@"file:///"]) {
             urlbinary = [[NSURL alloc] initWithString:url];
         }
         NSData* dat = [NSData dataWithContentsOfURL:urlbinary];
