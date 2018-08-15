@@ -58,6 +58,9 @@ RCT_EXPORT_METHOD(openDoc:(NSArray *)array callback:(RCTResponseSenderBlock)call
         NSString* fileNameOptional = dict[@"fileName"];
         NSString* fileType = dict[@"fileType"];
         NSURL* url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        if ([urlStr containsString:@"file:///"]) {
+            url = [[NSURL alloc] initWithString:urlStr];
+        }
         NSData* dat = [NSData dataWithContentsOfURL:url];
         RCTLogInfo(@"Url %@", url);
         RCTLogInfo(@"FileNameOptional %@", fileNameOptional);
